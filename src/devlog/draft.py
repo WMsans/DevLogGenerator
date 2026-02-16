@@ -4,7 +4,8 @@ from devlog.llm import generate
 
 SUMMARIZE_SYSTEM = (
     "You are a developer writing a casual video dev log script. "
-    "Summarize the following git commits into a bullet-point list of updates. "
+    "Summarize the following git commits into a bullet-point list of updates, "
+    "ordered from oldest to newest. "
     "Be concise but technically accurate. Output only the bullet list."
 )
 
@@ -18,6 +19,8 @@ def generate_draft(
 ) -> None:
     """Generate a draft.md from selected commits via LLM summarization."""
     selected = [commits[i] for i in selected_indices]
+    # Sort from oldest to newest (ascending)
+    selected.sort(key=lambda x: x["date"])
 
     commit_text = "\n".join(
         f"- [{c['sha'][:7]}] {c['message']} ({c['date']})" for c in selected
