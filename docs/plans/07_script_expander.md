@@ -83,7 +83,7 @@ def expand_draft(
     output_path: Path,
     repo_path: Path,
     commit_sha: str,
-    model: str = "llama3",
+    model: str = "qwen3:8b",
 ) -> None:
     """Expand tagged blocks via LLM + diff context, write script.md."""
     sections: list[str] = []

@@ -78,7 +78,7 @@ def generate_draft(
     selected_indices: list[int],
     output_path: Path,
     project_name: str = "Project",
-    model: str = "llama3",
+    model: str = "qwen3:8b",
 ) -> None:
     """Generate a draft.md from selected commits via LLM summarization."""
     selected = [commits[i] for i in selected_indices]

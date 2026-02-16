@@ -5,7 +5,7 @@ DEFAULT_URL = "http://localhost:11434"
 
 def generate(
     prompt: str,
-    model: str = "llama3",
+    model: str = "qwen3:8b",
     base_url: str = DEFAULT_URL,
     system: str | None = None,
 ) -> str:

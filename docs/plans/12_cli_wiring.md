@@ -80,7 +80,7 @@ app = typer.Typer(help="Generate video dev logs from git history.")
 def init(
     repo: Path = typer.Option(".", help="Path to git repo"),
     output: Path = typer.Option("draft.md", help="Output draft file"),
-    model: str = typer.Option("llama3", help="Ollama model name"),
+    model: str = typer.Option("qwen3:8b", help="Ollama model name"),
     max_commits: int = typer.Option(20, help="Max commits to scan"),
     project: str = typer.Option("Project", help="Project name for frontmatter"),
 ):
@@ -115,7 +115,7 @@ def expand(
     draft: Path = typer.Option("draft.md", help="Input draft file"),
     output: Path = typer.Option("script.md", help="Output script file"),
     repo: Path = typer.Option(".", help="Path to git repo"),
-    model: str = typer.Option("llama3", help="Ollama model name"),
+    model: str = typer.Option("qwen3:8b", help="Ollama model name"),
 ):
     """Phase 2: Expand {{EXPAND}} tags in draft.md into script.md."""
     if not draft.exists():
