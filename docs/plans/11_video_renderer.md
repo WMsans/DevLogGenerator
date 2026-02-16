@@ -81,6 +81,8 @@ Expected: FAIL — `ModuleNotFoundError`
 # src/devlog/renderer.py
 from pathlib import Path
 
+import cv2
+import numpy as np
 from moviepy import (
     AudioFileClip,
     CompositeVideoClip,
@@ -94,6 +96,28 @@ from devlog.sprites import resolve_sprite
 
 DEFAULT_SIZE = (1280, 720)
 BG_COLOR = (30, 30, 30)
+
+
+def load_sprite_nearest(path: Path, target_height: int) -> np.ndarray:
+    """Load and resize sprite using nearest-neighbor interpolation for pixel art."""
+    img = cv2.imread(str(path), cv2.IMREAD_UNCHANGED)
+    if img is None:
+        raise ValueError(f"Failed to load sprite: {path}")
+
+    scale = target_height / img.shape[0]
+    new_width = int(img.shape[1] * scale)
+    resized = cv2.resize(
+        img,
+        (new_width, target_height),
+        interpolation=cv2.INTER_NEAREST,
+    )
+
+    if img.shape[2] == 4:
+        resized = cv2.cvtColor(resized, cv2.COLOR_BGRA2RGBA)
+    else:
+        resized = cv2.cvtColor(resized, cv2.COLOR_BGR2RGB)
+
+    return resized
 
 
 def render_video(
@@ -113,12 +137,12 @@ def render_video(
         synthesize_segment(seg.text, audio_path)
         audio_clip = AudioFileClip(str(audio_path))
 
-        # 2. Resolve sprite
+        # 2. Resolve sprite (nearest-neighbor for pixel art)
         sprite_path = resolve_sprite(seg.emotion, sprite_dir)
+        sprite_img = load_sprite_nearest(sprite_path, size[1] // 2)
         sprite_clip = (
-            ImageClip(str(sprite_path))
+            ImageClip(sprite_img)
             .with_duration(audio_clip.duration)
-            .resized(height=size[1] // 2)
         )
 
         # 3. Compose frame: background + sprite
