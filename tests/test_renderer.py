@@ -18,11 +18,9 @@ SEGMENTS = [
 @patch("devlog.renderer.CompositeVideoClip")
 @patch("devlog.renderer.AudioFileClip")
 @patch("devlog.renderer.ImageClip")
-@patch("devlog.renderer.synthesize_segment")
 @patch("devlog.renderer.resolve_sprite")
 def test_render_creates_mp4(
     mock_sprite,
-    mock_synth,
     mock_imgclip,
     mock_audioclip,
     mock_composite,
@@ -32,8 +30,6 @@ def test_render_creates_mp4(
 ):
     mock_sprite.return_value = tmp_path / "sprite.png"
     mock_load_sprite.return_value = np.zeros((100, 100, 3), dtype="uint8")
-
-    mock_synth.return_value = tmp_path / "audio.wav"
 
     mock_audio_inst = MagicMock()
     mock_audio_inst.duration = 3.0
@@ -51,13 +47,20 @@ def test_render_creates_mp4(
     mock_final = MagicMock()
     mock_concat.return_value = mock_final
 
+    mock_provider = MagicMock()
+    mock_provider.synthesize_batch.return_value = [
+        (tmp_path / "seg_0.mp3", 3.0),
+        (tmp_path / "seg_1.mp3", 3.0),
+    ]
+
     output = tmp_path / "out.mp4"
     render_video(
         segments=SEGMENTS,
         output_path=output,
         sprite_dir=tmp_path,
         work_dir=tmp_path,
+        tts_provider=mock_provider,
     )
 
-    assert mock_synth.call_count == 2
+    mock_provider.synthesize_batch.assert_called_once_with(SEGMENTS, tmp_path)
     mock_final.write_videofile.assert_called_once()

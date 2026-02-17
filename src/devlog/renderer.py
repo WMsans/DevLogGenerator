@@ -9,9 +9,10 @@ from moviepy import (
     concatenate_videoclips,
 )
 
-from devlog.audio import synthesize_segment
+from devlog.audio import get_provider
 from devlog.script_parser import ScriptSegment
 from devlog.sprites import resolve_sprite
+from devlog.tts.base import TTSProvider
 
 DEFAULT_SIZE = (1280, 720)
 BG_COLOR = (0, 255, 0)
@@ -44,15 +45,18 @@ def render_video(
     output_path: Path,
     sprite_dir: Path,
     work_dir: Path,
+    tts_provider: TTSProvider | None = None,
     size: tuple[int, int] = DEFAULT_SIZE,
     fps: int = 24,
 ) -> None:
     """Stitch segments into a final video with avatar and voiceover."""
-    clips = []
+    if tts_provider is None:
+        tts_provider = get_provider("edge-tts")
 
-    for i, seg in enumerate(segments):
-        audio_path = work_dir / f"seg_{i}.wav"
-        synthesize_segment(seg.text, audio_path)
+    clips = []
+    audio_segments = tts_provider.synthesize_batch(segments, work_dir)
+
+    for (audio_path, _), seg in zip(audio_segments, segments):
         audio_clip = AudioFileClip(str(audio_path))
 
         sprite_path = resolve_sprite(seg.emotion, sprite_dir)
