@@ -14,7 +14,7 @@ from devlog.script_parser import ScriptSegment
 from devlog.sprites import resolve_sprite
 
 DEFAULT_SIZE = (1280, 720)
-BG_COLOR = (30, 30, 30)
+BG_COLOR = (0, 255, 0)
 
 
 def load_sprite_nearest(path: Path, target_height: int) -> np.ndarray:
