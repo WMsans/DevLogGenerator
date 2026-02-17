@@ -23,7 +23,7 @@ def _mock_response(text: str) -> MagicMock:
 @patch("devlog.llm.requests.post")
 def test_generate_returns_text(mock_post):
     mock_post.return_value = _mock_response("Hello from Ollama")
-    result = generate("Say hello", model="llama3")
+    result = generate("Say hello", model="qwen3:8b")
     assert result == "Hello from Ollama"
 
 
@@ -69,7 +69,7 @@ DEFAULT_URL = "http://localhost:11434"
 
 def generate(
     prompt: str,
-    model: str = "llama3",
+    model: str = "qwen3:8b",
     base_url: str = DEFAULT_URL,
     system: str | None = None,
 ) -> str:
