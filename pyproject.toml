@@ -9,6 +9,7 @@ dependencies = [
     "requests>=2.31",
     "moviepy>=1.0",
     "edge-tts>=6.0",
+    "opencv-python>=4.8",
 ]
 
 [project.optional-dependencies]
