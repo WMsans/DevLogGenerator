@@ -4,7 +4,7 @@ from unittest.mock import AsyncMock, patch, MagicMock
 from devlog.audio import synthesize_segment
 
 
-@patch("devlog.audio.edge_tts.Communicate")
+@patch("devlog.tts.edge.edge_tts.Communicate")
 def test_synthesize_creates_mp3(mock_communicate_class, tmp_path):
     mock_communicate = MagicMock()
     mock_communicate.save = AsyncMock()
@@ -17,7 +17,7 @@ def test_synthesize_creates_mp3(mock_communicate_class, tmp_path):
     mock_communicate.save.assert_called_once_with(str(output))
 
 
-@patch("devlog.audio.edge_tts.Communicate")
+@patch("devlog.tts.edge.edge_tts.Communicate")
 def test_synthesize_uses_provided_voice(mock_communicate_class, tmp_path):
     mock_communicate = MagicMock()
     mock_communicate.save = AsyncMock()
