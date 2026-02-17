@@ -48,3 +48,31 @@ def test_render_command_exists(mock_render, mock_parse, tmp_path):
     result = runner.invoke(app, ["render", "--script", str(script)])
     assert result.exit_code == 0
     assert "video" in result.stdout.lower()
+
+
+@patch("devlog.cli.parse_script")
+@patch("devlog.cli.render_video")
+@patch("devlog.cli.get_provider")
+def test_render_accepts_tts_flag(mock_provider, mock_render, mock_parse, tmp_path):
+    script = tmp_path / "script.md"
+    script.write_text("(emotion: neutral)\nHello world")
+
+    mock_parse.return_value = [
+        type("Segment", (), {"text": "Hello world", "emotion": "neutral"})
+    ]
+    mock_provider.return_value = type("Provider", (), {})()
+
+    result = runner.invoke(
+        app,
+        [
+            "render",
+            "--script",
+            str(script),
+            "--tts",
+            "edge-tts",
+            "--tts-voice",
+            "en-US-AvaNeural",
+        ],
+    )
+    assert result.exit_code == 0
+    mock_provider.assert_called_once_with("edge-tts", voice="en-US-AvaNeural")

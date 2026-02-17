@@ -4,6 +4,7 @@ from pathlib import Path
 import questionary
 import typer
 
+from devlog.audio import get_provider
 from devlog.draft import generate_draft
 from devlog.expander import expand_draft
 from devlog.git_scanner import scan_commits
@@ -88,6 +89,8 @@ def render(
     script: Path = typer.Option("script.md", help="Input script file"),
     output: Path = typer.Option("devlog.mp4", help="Output video file"),
     sprites: Path = typer.Option("assets/sprites", help="Sprite directory"),
+    tts: str = typer.Option("edge-tts", help="TTS provider (edge-tts, live)"),
+    tts_voice: str = typer.Option(None, help="Voice for TTS provider"),
 ):
     """Phase 3: Render script.md into devlog.mp4."""
     if not script.exists():
@@ -104,11 +107,22 @@ def render(
     work_dir = Path(".devlog_tmp")
     work_dir.mkdir(exist_ok=True)
 
+    kwargs = {}
+    if tts_voice:
+        kwargs["voice"] = tts_voice
+
+    try:
+        provider = get_provider(tts, **kwargs)
+    except ValueError as e:
+        typer.echo(str(e), err=True)
+        raise typer.Exit(1)
+
     render_video(
         segments=segments,
         output_path=output,
         sprite_dir=sprites,
         work_dir=work_dir,
+        tts_provider=provider,
     )
     typer.echo(f"Video rendered to {output}")
 
