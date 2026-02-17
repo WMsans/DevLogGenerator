@@ -1,0 +1,139 @@
+---
+project: "RayTraceVoxel"
+commits:
+  - "85896ae"
+  - "db1f60a"
+  - "5ad0188"
+  - "f846b14"
+  - "369a1fd"
+  - "f356a1d"
+  - "a6c6073"
+  - "d07e323"
+  - "61f2054"
+  - "5219d07"
+  - "49d586c"
+  - "783bb97"
+  - "17d6b35"
+  - "82f5a5d"
+  - "893086e"
+  - "a95f90f"
+  - "83925fe"
+  - "91ab23c"
+  - "76f3aa0"
+  - "16d06ab"
+  - "babf725"
+  - "8af5780"
+  - "1c9935e"
+  - "57bdee9"
+  - "b3c20cb"
+  - "4eeea76"
+  - "3eac4f6"
+  - "2c01a6b"
+  - "00b83b1"
+  - "73abe84"
+  - "128711c"
+  - "b8fb937"
+  - "91bc576"
+  - "8263f04"
+  - "1383c62"
+  - "b86250d"
+  - "f0e4c1a"
+  - "1cabcc9"
+  - "8e058c8"
+  - "9f8c174"
+  - "b617908"
+  - "f8e7cbd"
+  - "4abb1e9"
+  - "cb96754"
+  - "6c6dd57"
+  - "8e24647"
+  - "c31ff54"
+  - "875605e"
+  - "c51ea39"
+  - "1aaebd6"
+  - "55cb6c6"
+  - "9405505"
+  - "4084fe6"
+  - "78463d7"
+  - "367bca0"
+  - "e162de1"
+  - "18ec568"
+  - "cfbb1fc"
+  - "c9553c9"
+  - "2f9db30"
+  - "54f941d"
+  - "22408d9"
+  - "7f02145"
+  - "ec2e4aa"
+  - "a8bef4b"
+  - "176ad8c"
+---
+
+## Updates
+
+- Fixed editing across chunks  
+- Added ray trace setup  
+- Fixed shadow density  
+- Fixed self-shadowing  
+- Fixed normal unpacking  
+- Fixed culled shadow  
+- Enabled grass rendering  
+- Added debug normal visualization  
+- Fixed full brick overkill  
+- Added stepped shading  
+- Fixed toon shadow  
+- Added outline setup  
+- Fixed pixel outline  
+- Fixed outline blend  
+- Added outline strength parameter  
+- Added highlight setup  
+- Removed highlight  
+- Re-added highlight setup  
+- Fixed edge detection removal  
+- Fixed cel shading parameter  
+- Added texture scale  
+- Added outline parameters  
+- Fixed single voxel highlight  
+- Fixed outline depth fade  
+- Added atmospheric color  
+- Enabled grass rendering (again)  
+- Added mesh-to-voxel shadow  
+- Added LOD meshing  
+- Added voxel-to-mesh shadow  
+- Fixed mesh self-shadow  
+- Fixed grass shadow receive  
+- Fixed grass shading  
+- Fixed outline shading  
+- Added grass outline  
+- Added oak tree setup  
+- Fixed tree size  
+- Improved texture import for trees  
+- Fixed leaves  
+- Fixed leaves shading  
+- Fixed leave outline  
+- Added god rays  
+- Fixed god ray sky alpha  
+- Added noon/dawn threshold  
+{{EXPAND}}- Merged branch 'feat/meshshadow'  
+- Fixed renderer issues  
+- Added rainforest terrain  
+- Added transient auditor setup  
+- Fixed LOD overlapping  
+- Fixed air volume  
+- Ensured transient volume  
+- Fixed flashing loading  
+- Fixed merging issues  
+- Fixed race condition  
+- Fixed hash function  
+- Fixed normal calculations  
+- Fixed dynamic allocation  
+- Fixed dynamic allocation for edits  
+- Improved tree performance  
+- Added async memory queue  
+- Optimized LOD traversal  
+- Optimized memory trimming  
+- Fixed LOD overlapping  
+- Fixed chunk merging  
+- Fixed chunk overlapping  
+{{EXPAND}}- Merged branch 'fix/steaming'  
+- Fixed oak tree brick smoothness
