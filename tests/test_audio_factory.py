@@ -2,6 +2,7 @@ import pytest
 
 from devlog.audio import get_provider, list_providers
 from devlog.tts.edge import EdgeTTSProvider
+from devlog.tts.live import LiveRecorder
 
 
 def test_list_providers_returns_available():
@@ -18,3 +19,13 @@ def test_get_provider_returns_edge_tts_instance():
 def test_get_provider_raises_for_unknown():
     with pytest.raises(ValueError, match="Unknown TTS provider"):
         get_provider("unknown-provider")
+
+
+def test_list_providers_includes_live():
+    providers = list_providers()
+    assert "live" in providers
+
+
+def test_get_provider_returns_live_instance():
+    provider = get_provider("live")
+    assert isinstance(provider, LiveRecorder)

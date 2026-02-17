@@ -2,9 +2,11 @@ from pathlib import Path
 
 from devlog.tts.base import TTSProvider
 from devlog.tts.edge import EdgeTTSProvider
+from devlog.tts.live import LiveRecorder
 
 PROVIDERS: dict[str, type[TTSProvider]] = {
     "edge-tts": EdgeTTSProvider,
+    "live": LiveRecorder,
 }
 
 DEFAULT_VOICE = "en-US-AvaNeural"
